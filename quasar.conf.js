@@ -11,6 +11,7 @@
 /* eslint func-names: 0 */
 /* eslint global-require: 0 */
 const { configure } = require('quasar/wrappers');
+const WindiCSS = require('windicss-webpack-plugin').default;
 
 module.exports = configure((ctx) => ({
   // https://v2.quasar.dev/quasar-cli/supporting-ts
@@ -35,6 +36,7 @@ module.exports = configure((ctx) => ({
   // https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
   css: [
     'app.sass',
+    '~windi.css',
   ],
 
   // https://github.com/quasarframework/quasar/tree/dev/extras
@@ -53,7 +55,7 @@ module.exports = configure((ctx) => ({
 
   // Full list of options: https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
   build: {
-    vueRouterMode: 'hash', // available values: 'hash', 'history'
+    vueRouterMode: 'history', // available values: 'hash', 'history'
 
     // transpile: false,
 
@@ -76,6 +78,12 @@ module.exports = configure((ctx) => ({
     chainWebpack(/* chain */) {
       //
     },
+    extendWebpack(cfg) {
+      cfg.plugins = [
+        ...cfg.plugins,
+        new WindiCSS(),
+      ];
+    },
   },
 
   // Full list of options: https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
@@ -87,7 +95,11 @@ module.exports = configure((ctx) => ({
 
   // https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
   framework: {
-    config: {},
+    config: {
+      ripple: {
+        early: true,
+      },
+    },
 
     // iconSet: 'material-icons', // Quasar icon set
     // lang: 'en-US', // Quasar language pack

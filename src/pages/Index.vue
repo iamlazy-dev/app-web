@@ -104,12 +104,99 @@
             />
             <q-btn
               rounded
-              class="text-gray-700"
+              :class="`text-gray-700 before:(border-t border-gray-200/90) ${isScrolled ? 'before:(border shadow-none)' : 'before:shadow-md'}`"
             >
-              <div class="py-2 flex gap-x-2">
-                <q-icon name="menu" />
-                <q-icon name="account_circle" />
+              <div class="py-2 flex items-center gap-x-2">
+                <q-icon name="r_menu" />
+                <q-avatar
+                  icon="r_account_circle"
+                  rounded
+                  class="!text-3xl"
+                />
               </div>
+
+              <q-menu
+                anchor="bottom right"
+                self="top right"
+                transition-show="jump-down"
+                transition-hide="jump-up"
+                transition-duration="200"
+                class="min-w-52 border-t border-gray-200/60 rounded-lg shadow-lg"
+              >
+                <q-list>
+                  <q-item
+                    v-ripple
+                    clickable
+                    class="bg-bg-light-100"
+                  >
+                    <q-item-section avatar>
+                      <q-avatar
+                        icon="r_person"
+                        rounded
+                        class="text-gray-400 w-8 h-8"
+                      />
+                    </q-item-section>
+                    <q-item-section class="font-medium text-gray-700">
+                      AKUN SAYA
+                    </q-item-section>
+                  </q-item>
+
+                  <q-separator />
+
+                  <q-item
+                    v-ripple
+                    clickable
+                    class="bg-bg-light-100"
+                  >
+                    <q-item-section avatar>
+                      <q-avatar
+                        icon="r_dashboard"
+                        rounded
+                        class="text-gray-400 w-8 h-8"
+                      />
+                    </q-item-section>
+                    <q-item-section class="font-medium text-gray-700">
+                      DASHBOARD
+                    </q-item-section>
+                  </q-item>
+
+                  <q-item
+                    v-ripple
+                    clickable
+                    class="bg-bg-light-100"
+                  >
+                    <q-item-section avatar>
+                      <q-avatar
+                        icon="r_help"
+                        rounded
+                        class="text-gray-400 w-8 h-8"
+                      />
+                    </q-item-section>
+                    <q-item-section class="font-medium text-gray-700">
+                      BANTUAN
+                    </q-item-section>
+                  </q-item>
+
+                  <q-separator />
+
+                  <q-item
+                    v-ripple
+                    clickable
+                    class="bg-bg-light-100"
+                  >
+                    <q-item-section avatar>
+                      <q-avatar
+                        icon="r_logout"
+                        rounded
+                        class="text-gray-400 w-8 h-8"
+                      />
+                    </q-item-section>
+                    <q-item-section class="font-medium text-gray-700">
+                      LOGOUT
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </q-menu>
             </q-btn>
           </div>
         </div>
@@ -158,9 +245,7 @@
           </div>
         </section>
 
-        <section class="self-stretch h-[80vh] bg-gray-100">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, quibusdam.
-        </section>
+        <section class="self-stretch h-[80vh] bg-gray-100" />
       </q-page>
     </q-page-container>
   </q-layout>

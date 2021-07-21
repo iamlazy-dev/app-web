@@ -93,6 +93,14 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
 
     // allow debugger during development only
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+
+    // style
+    'func-names': 'off',
+    'max-len': ['warn', {
+      code: 150,
+      // will ignore everything inside html attrs
+      ignorePattern: '[\\w-]+="([^"]*)"',
+    }],
   }
 }

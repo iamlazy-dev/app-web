@@ -1,49 +1,114 @@
 <template>
-  <q-page class="row items-center justify-evenly">
-    <example-component
-      title="Example component"
-      active
-      :todos="todos"
-      :meta="meta"
-    />
-  </q-page>
+  <q-layout
+    view="hHh LpR fFf"
+    @scroll="onLayoutScroll"
+  >
+    <q-header
+      :elevated="isScrolled"
+      class="bg-white text-gray-900"
+    >
+      <q-toolbar class="p-4">
+        <div class="w-full max-w-screen-lg mx-auto flex justify-between items-center">
+          <q-toolbar-title class="brand">
+            iamlazy.dev
+          </q-toolbar-title>
+
+          <div class="flex items-center gap-x-8">
+            <q-btn
+              label="PRODUK"
+              flat
+              class="text-gray-600"
+            />
+            <q-btn
+              label="PANDUAN"
+              flat
+              class="text-gray-600"
+            />
+            <q-btn
+              label="HARGA"
+              flat
+              class="text-gray-600"
+            />
+            <q-btn
+              rounded
+              class="text-gray-700"
+            >
+              <div class="py-2 flex gap-x-2">
+                <q-icon name="menu" />
+                <q-icon name="account_circle" />
+              </div>
+            </q-btn>
+          </div>
+        </div>
+      </q-toolbar>
+    </q-header>
+
+    <q-page-container>
+      <q-page class="flex flex-col">
+        <section class="self-center w-full max-w-screen-xl h-[85vh] flex flex-nowrap justify-center items-center gap-x-16">
+          <div class="flex flex-col gap-y-8">
+            <h3 class="font-medium text-4xl text-gray-800">
+              <span class="block">Bikin toko online cepat</span>
+              <span class="block">Tapi masih enjoy ngoding?</span>
+            </h3>
+
+            <p class="max-w-prose mb-16 text-gray-500">
+              Menyediakan berbagai kebutuhan anda sebagai developer untuk mengembangkan
+              aplikasi anda! Menggunakan API untuk dari menyimpan ke database,
+              menangani flow pembayaran, dan masih banyak lagi ;)
+            </p>
+
+            <div class="flex gap-x-4">
+              <q-btn
+                label="Mulai sekarang"
+                no-caps
+                rounded
+                unelevated
+                class="bg-gray-700 text-white"
+              />
+              <q-btn
+                label="Lihat panduan"
+                no-caps
+                rounded
+                flat
+                class="text-gray-700"
+              />
+            </div>
+          </div>
+
+          <div class="p-12">
+            <img
+              src="/assets/Home_landing app example.png"
+              alt="contoh aplikasi"
+              class="w-96 h-96 object-scale-down"
+            >
+          </div>
+        </section>
+      </q-page>
+    </q-page-container>
+  </q-layout>
 </template>
 
 <script lang="ts">
-import { Todo, Meta } from 'components/models';
-import ExampleComponent from 'components/CompositionComponent.vue';
-import { defineComponent, ref } from 'vue';
+import { defineComponent } from 'vue';
+import type { Q } from 'src/types';
 
 export default defineComponent({
-  name: 'PageIndex',
-  components: { ExampleComponent },
-  setup() {
-    const todos = ref<Todo[]>([
-      {
-        id: 1,
-        content: 'ct1',
-      },
-      {
-        id: 2,
-        content: 'ct2',
-      },
-      {
-        id: 3,
-        content: 'ct3',
-      },
-      {
-        id: 4,
-        content: 'ct4',
-      },
-      {
-        id: 5,
-        content: 'ct5',
-      },
-    ]);
-    const meta = ref<Meta>({
-      totalCount: 1200,
-    });
-    return { todos, meta };
+  name: 'PageHome',
+  data() {
+    return {
+      isScrolled: false,
+    };
+  },
+  methods: {
+    onLayoutScroll({ position }: Q.Layout.onScrollDetails) {
+      this.isScrolled = position > 0;
+    },
   },
 });
 </script>
+
+<style lang="sass">
+// prefer importing global css here due to windicss bug (maybe its bug 😐)
+@import 'src/css/app.sass'
+</style>

@@ -13,7 +13,80 @@
             iamlazy.dev
           </q-toolbar-title>
 
-          <div class="flex items-center gap-x-8">
+          <q-btn
+            icon="r_menu"
+            unelevated
+            round
+            class="sm:hidden py-2 bg-gray-200 text-gray-700"
+          >
+            <q-menu class="w-[50vw]">
+              <q-list>
+                <q-item
+                  v-ripple
+                  clickable
+                >
+                  <q-item-section avatar>
+                    <q-avatar
+                      icon="r_category"
+                      rounded
+                      class="text-gray-400 w-8 h-8"
+                    />
+                  </q-item-section>
+                  <q-item-section class="font-medium text-gray-700">
+                    PRODUK
+                  </q-item-section>
+                </q-item>
+                <q-item
+                  v-ripple
+                  clickable
+                >
+                  <q-item-section avatar>
+                    <q-avatar
+                      icon="r_article"
+                      rounded
+                      class="text-gray-400 w-8 h-8"
+                    />
+                  </q-item-section>
+                  <q-item-section class="font-medium text-gray-700">
+                    PANDUAN
+                  </q-item-section>
+                </q-item>
+                <q-item
+                  v-ripple
+                  clickable
+                >
+                  <q-item-section avatar>
+                    <q-avatar
+                      icon="r_price_check"
+                      rounded
+                      class="text-gray-400 w-8 h-8"
+                    />
+                  </q-item-section>
+                  <q-item-section class="font-medium text-gray-700">
+                    HARGA
+                  </q-item-section>
+                </q-item>
+                <q-item
+                  v-ripple
+                  clickable
+                  class="bg-bg-light-100"
+                >
+                  <q-item-section avatar>
+                    <q-avatar
+                      icon="r_dashboard"
+                      rounded
+                      class="text-gray-400 w-8 h-8"
+                    />
+                  </q-item-section>
+                  <q-item-section class="font-medium text-gray-700">
+                    DASHBOARD
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
+          </q-btn>
+
+          <div class="hidden !sm:flex items-center gap-x-8">
             <q-btn
               label="PRODUK"
               flat
@@ -45,11 +118,11 @@
 
     <q-page-container>
       <q-page class="flex flex-col">
-        <section class="self-center w-full max-w-screen-xl h-[85vh] flex flex-nowrap justify-center items-center gap-x-16">
-          <div class="flex flex-col gap-y-8">
+        <section class="self-center w-full max-w-screen-xl sm:h-[80vh] p-4 sm:p-0 pb-16 sm:pb-8 flex flex-col sm:flex-row flex-nowrap justify-center items-center gap-x-16">
+          <div class="flex flex-col sm:gap-y-8">
             <h3 class="font-medium text-4xl text-gray-800">
               <span class="block">Bikin toko online cepat</span>
-              <span class="block">Tapi masih enjoy ngoding?</span>
+              <span class="block">tapi masih enjoy ngoding?</span>
             </h3>
 
             <p class="max-w-prose mb-16 text-gray-500">
@@ -76,13 +149,17 @@
             </div>
           </div>
 
-          <div class="p-12">
+          <div class="order-first sm:order-last sm:p-12">
             <img
               src="/assets/Home_landing app example.png"
               alt="contoh aplikasi"
-              class="w-96 h-96 object-scale-down"
+              class="w-full sm:w-96 sm:h-96 object-scale-down"
             >
           </div>
+        </section>
+
+        <section class="self-stretch h-[80vh] bg-gray-100">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, quibusdam.
         </section>
       </q-page>
     </q-page-container>

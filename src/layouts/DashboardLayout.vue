@@ -1,44 +1,256 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="lHh lpR lfr">
     <q-header elevated>
-      <q-toolbar>
+      <q-toolbar class="p-2.5 gap-x-4">
         <q-btn
           flat
           dense
           round
-          icon="menu"
+          :icon="isLeftDrawerOpen ? 'r_chevron_left' : 'r_chevron_right'"
           aria-label="Menu"
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title>
-          Quasar App
+        <q-toolbar-title class="space-x-2">
+          <small class="text-xs opacity-70">{{ $t('layouts.dashboard.topNav.project') }}</small>
+          <q-btn-dropdown
+            label="Toko Batik Pak Charles"
+            dropdown-icon="r_arrow_drop_down"
+            dense
+            flat
+          >
+            <q-list>
+              <q-item
+                v-for="el in projects"
+                :key="el.id"
+                :to="`/dashboard/${el.id}`"
+              >
+                <q-item-section>
+                  <q-item-label>{{ el.name }}</q-item-label>
+                </q-item-section>
+              </q-item>
+
+              <q-item
+                to="/dashboard/new"
+                class="bg-gray-100 text-gray-600"
+              >
+                <q-item-section avatar>
+                  <q-avatar icon="r_add" />
+                </q-item-section>
+                <q-item-section>
+                  <q-item-label>{{ $t('layouts.dashboard.topNav.createProject') }}</q-item-label>
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </q-btn-dropdown>
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <q-btn
+          icon="r_notifications"
+          flat
+          round
+          @click="toggleRightDrawer"
+        />
+
+        <q-btn
+          flat
+          round
+        >
+          <q-avatar rounded>
+            D
+          </q-avatar>
+
+          <q-menu
+            anchor="bottom right"
+            self="top right"
+            transition-show="jump-down"
+            transition-hide="jump-up"
+            transition-duration="200"
+            class="border-t rounded-lg border-gray-200/60 shadow-lg min-w-52 uppercase"
+          >
+            <q-list>
+              <q-item
+                v-ripple
+                clickable
+                class="bg-bg-light-100"
+              >
+                <q-item-section avatar>
+                  <q-avatar
+                    icon="r_help"
+                    rounded
+                    class="h-8 text-gray-400 w-8"
+                  />
+                </q-item-section>
+                <q-item-section class="font-medium text-gray-700">
+                  {{ $t('layouts.main.navItem.help') }}
+                </q-item-section>
+              </q-item>
+
+              <q-separator />
+
+              <q-item
+                v-ripple
+                clickable
+                class="bg-bg-light-100"
+              >
+                <q-item-section avatar>
+                  <q-avatar
+                    icon="r_logout"
+                    rounded
+                    class="h-8 text-gray-400 w-8"
+                  />
+                </q-item-section>
+                <q-item-section class="font-medium text-gray-700">
+                  {{ $t('layouts.main.navItem.logout') }}
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </q-menu>
+        </q-btn>
       </q-toolbar>
     </q-header>
 
     <q-drawer
-      v-model="leftDrawerOpen"
+      v-model="isLeftDrawerOpen"
       show-if-above
       bordered
-      class="bg-grey-1"
+      class="bg-gray-100"
     >
-      <q-list>
+      <q-item-label
+        header
+        class="text-center brand"
+      >
+        <router-link to="/">
+          iamlazy.dev
+        </router-link>
+      </q-item-label>
+
+      <q-list class="px-2">
+        <q-separator class="bg-gray-200 mt-2 mb-4" />
+
+        <q-item
+          to="/dashboard"
+          exact
+          class="rounded-2xl text-gray-600"
+          active-class="bg-gray-200"
+        >
+          <q-item-section avatar>
+            <q-icon name="r_home" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label class="font-medium capitalize">
+              {{ $t('layouts.dashboard.sideNav.overview') }}
+            </q-item-label>
+          </q-item-section>
+        </q-item>
+
         <q-item-label
           header
-          class="text-grey-8"
+          class="font-semibold text-xs text-gray-400 uppercase !mt-2"
         >
-          Essential Links
+          {{ $t('layouts.dashboard.sideNav.module') }}
         </q-item-label>
 
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
+        <q-item
+          v-for="(el, i) in sideNav.installedModules"
+          :key="i"
+          :to="el.to"
+          exact
+          class="rounded-2xl text-gray-600"
+          active-class="bg-gray-200"
+        >
+          <q-item-section avatar>
+            <q-avatar :icon="el.icon" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label class="font-medium capitalize">
+              {{ el.label }}
+            </q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item
+          to="/dashboard/module"
+          exact
+          dense
+          class="border-dashed border-2 border-gray-200 rounded-2xl text-gray-500"
+          active-class="bg-gray-200"
+        >
+          <q-item-section avatar>
+            <q-avatar icon="r_extension" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label class="font-medium capitalize">
+              {{ $t('layouts.dashboard.sideNav.addModule') }}
+            </q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item-label
+          header
+          class="font-semibold text-xs text-gray-400 uppercase !mt-2"
+        >
+          {{ $t('layouts.dashboard.sideNav.settings') }}
+        </q-item-label>
+
+        <q-item
+          v-for="(el,i) in sideNav.settings"
+          :key="i"
+          :to="el.to"
+          exact
+          class="rounded-2xl text-gray-600"
+          active-class="bg-gray-200"
+        >
+          <q-item-section avatar>
+            <q-icon :name="el.icon" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label class="font-medium capitalize">
+              {{ el.label }}
+            </q-item-label>
+          </q-item-section>
+        </q-item>
       </q-list>
+    </q-drawer>
+
+    <q-drawer
+      v-model="isRightDrawerOpen"
+      side="right"
+      overlay
+      elevated
+    >
+      <q-list
+        v-if="notificationItems.length"
+        padding
+      >
+        <q-item
+          v-for="(el, i) in notificationItems"
+          :key="i"
+          :to="el.action"
+        >
+          <q-item-section>
+            <q-item-label>{{ el.message }}</q-item-label>
+            <q-item-label caption>
+              {{ [
+                el.type.toUpperCase(),
+                el.projectName,
+                el.timestamp.toDateString()
+              ].filter(Boolean).join(' | ') }}
+            </q-item-label>
+          </q-item-section>
+        </q-item>
+      </q-list>
+
+      <span
+        v-else
+        class="m-auto"
+      >
+        {{ $t('layouts.dashboard.notification.fallback') }}
+      </span>
     </q-drawer>
 
     <q-page-container>
@@ -48,70 +260,86 @@
 </template>
 
 <script lang="ts">
-import EssentialLink from 'components/EssentialLink.vue';
+import { defineComponent, reactive, toRefs } from 'vue';
+import { uid } from 'quasar';
+import { useI18n } from 'vue-i18n';
+import type { RouteLocationRaw } from 'vue-router';
 
-const linksList = [
+interface UserProject {
+  id: string;
+  name: string;
+}
+
+interface SideNavItem {
+  label: string;
+  icon: string;
+  to: RouteLocationRaw;
+  [k: string]: unknown;
+}
+
+interface NotificationItem {
+  projectName?: string;
+  message: string;
+  type: 'warning' | 'info' | 'need action';
+  timestamp: Date;
+  action: RouteLocationRaw;
+}
+
+const installedModules: SideNavItem[] = [
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev',
+    label: 'Product Database',
+    icon: 'img:https://www.gstatic.com/devrel-devsite/prod/v6276805c2ff8bacc915973efaa269b575b44ae3dde218d0ec8425b822ec321de/firebase/images/favicon.png',
+    to: `/dashboard/module/${uid()}`,
   },
   {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework',
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev',
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev',
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev',
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev',
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev',
+    label: 'Payments',
+    icon: 'r_payments',
+    to: `/dashboard/module/${uid()}`,
   },
 ];
 
-import { defineComponent, ref } from 'vue';
+const projects: UserProject[] = [
+  { id: uid(), name: 'Toko Elektronik Sugih Waras' },
+  { id: uid(), name: 'TBK. Mesra' },
+  { id: uid(), name: 'PT. Mencari Cinta Sejati' },
+];
 
 export default defineComponent({
-  name: 'MainLayout',
-
-  components: {
-    EssentialLink,
-  },
-
+  name: 'DashboardLayout',
   setup() {
-    const leftDrawerOpen = ref(false);
+    const state = reactive({
+      isLeftDrawerOpen: false,
+      isRightDrawerOpen: false,
+    });
+    // eslint-disable-next-line @typescript-eslint/unbound-method
+    const { t } = useI18n();
+    const sideNavSettingItems: SideNavItem[] = [
+      { label: t('layouts.dashboard.sideNav.team'), icon: 'r_group', to: '/dashboard/teams' },
+      { label: t('layouts.dashboard.sideNav.general'), icon: 'r_settings', to: '/dashboard/settings' },
+      { label: t('layouts.dashboard.sideNav.usage'), icon: 'r_data_usage', to: '/dashboard/usage' },
+    ];
+    const notificationItems: NotificationItem[] = [
+      // {
+      //   message: 'Anda didenda sebanyak 50M!',
+      //   type: 'need action',
+      //   timestamp: new Date(),
+      //   action: '/dashboard',
+      // },
+    ];
 
     return {
-      essentialLinks: linksList,
-      leftDrawerOpen,
+      ...toRefs(state),
       toggleLeftDrawer() {
-        leftDrawerOpen.value = !leftDrawerOpen.value;
+        state.isLeftDrawerOpen = !state.isLeftDrawerOpen;
+      },
+      toggleRightDrawer() {
+        state.isRightDrawerOpen = !state.isRightDrawerOpen;
+      },
+      projects,
+      notificationItems,
+      sideNav: {
+        installedModules,
+        settings: sideNavSettingItems,
       },
     };
   },

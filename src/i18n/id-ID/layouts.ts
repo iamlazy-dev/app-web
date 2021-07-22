@@ -10,4 +10,22 @@ export default {
       logout: 'Keluar',
     },
   },
+  dashboard: {
+    sideNav: {
+      overview: 'Ringkasan',
+      module: 'Modul',
+      addModule: 'Tambah Modul',
+      settings: 'Pengaturan',
+      team: 'Tim',
+      general: 'General',
+      usage: 'Penggunaan',
+    },
+    topNav: {
+      project: 'Projek',
+      createProject: 'Buat projek baru',
+    },
+    notification: {
+      fallback: 'Tidak ada notifikasi >.<',
+    },
+  },
 };

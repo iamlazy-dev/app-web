@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh lpR lfr">
     <q-header elevated>
-      <q-toolbar class="p-2.5 gap-x-4">
+      <q-toolbar class="bg-cool-gray-600 p-2.5 gap-x-4">
         <q-btn
           flat
           dense
@@ -18,27 +18,47 @@
             dropdown-icon="r_arrow_drop_down"
             dense
             flat
+            content-class="rounded-lg"
           >
             <q-list>
               <q-item
-                v-for="el in projects"
-                :key="el.id"
-                :to="`/dashboard/${el.id}`"
+                :to="{name: 'DashboardIndex'}"
+                exact
+                dense
+                class="text-gray-500"
               >
+                <q-item-section avatar>
+                  <q-avatar icon="r_view_stream" />
+                </q-item-section>
                 <q-item-section>
-                  <q-item-label>{{ el.name }}</q-item-label>
+                  <q-item-label>{{ $t('layouts.dashboard.topNav.seeAll') }}</q-item-label>
                 </q-item-section>
               </q-item>
 
               <q-item
-                to="/dashboard/new"
-                class="bg-gray-100 text-gray-600"
+                :to="{name: 'DashboardCreateProject'}"
+                exact
+                dense
+                class="text-gray-500"
               >
                 <q-item-section avatar>
                   <q-avatar icon="r_add" />
                 </q-item-section>
                 <q-item-section>
                   <q-item-label>{{ $t('layouts.dashboard.topNav.createProject') }}</q-item-label>
+                </q-item-section>
+              </q-item>
+
+              <q-separator />
+
+              <q-item
+                v-for="el in projects"
+                :key="el.id"
+                :to="{name: 'DashboardOverview', params: {id: el.id}}"
+                active-class="bg-gray-100 text-gray-600"
+              >
+                <q-item-section>
+                  <q-item-label>{{ el.name }}</q-item-label>
                 </q-item-section>
               </q-item>
             </q-list>
@@ -101,7 +121,7 @@
                   />
                 </q-item-section>
                 <q-item-section class="font-medium text-gray-700">
-                  {{ $t('layouts.main.navItem.logout') }}
+                  {{ $t('btn.logout') }}
                 </q-item-section>
               </q-item>
             </q-list>
@@ -114,7 +134,7 @@
       v-model="isLeftDrawerOpen"
       show-if-above
       bordered
-      class="bg-gray-100"
+      class="bg-cool-gray-100"
     >
       <q-item-label
         header
@@ -255,6 +275,7 @@
 
     <q-page-container>
       <router-view />
+      <slot />
     </q-page-container>
   </q-layout>
 </template>

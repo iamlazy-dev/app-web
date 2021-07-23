@@ -13,11 +13,28 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/dashboard',
+    component: () => import('layouts/SimpleLayout.vue'),
+    children: [
+      {
+        name: 'DashboardIndex',
+        path: '',
+        component: () => import('pages/dashboard/Index.vue'),
+      },
+      {
+        name: 'DashboardCreateProject',
+        path: 'create',
+        component: () => import('pages/dashboard/CreateProject.vue'),
+      },
+    ],
+  },
+  {
+    path: '/dashboard/:id',
     component: () => import('layouts/DashboardLayout.vue'),
     children: [
       {
         path: '',
-        component: () => import('pages/Dashboard/Index.vue'),
+        name: 'DashboardOverview',
+        component: () => import('pages/dashboard/Overview.vue'),
       },
     ],
   },

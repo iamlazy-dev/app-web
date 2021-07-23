@@ -6,6 +6,8 @@
   "vetur.experimental.templateInterpolationService": true,
   "conventionalCommits.scopes": [
     "page",
-    "layout"
+    "layout",
+    "ui"
   ],
+  "windicss.sortOnSave": true,
 }

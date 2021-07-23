@@ -7,7 +7,6 @@ export default {
       myAccount: 'Akun saya',
       dashboard: 'Dasbor',
       help: 'Bantuan',
-      logout: 'Keluar',
     },
   },
   dashboard: {
@@ -22,6 +21,7 @@ export default {
     },
     topNav: {
       project: 'Projek',
+      seeAll: 'Lihat semua projek',
       createProject: 'Buat projek baru',
     },
     notification: {

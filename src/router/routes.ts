@@ -1,4 +1,4 @@
-import { RouteRecordRaw } from 'vue-router';
+import type { RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -35,6 +35,16 @@ const routes: RouteRecordRaw[] = [
         path: '',
         name: 'DashboardOverview',
         component: () => import('pages/dashboard/Overview.vue'),
+      },
+      {
+        path: 'module/explore',
+        name: 'DashboardModuleExplorer',
+        component: () => import('pages/dashboard/ModuleExplorer.vue'),
+      },
+      {
+        path: 'module/:moduleId',
+        name: 'DashboardModuleDetails',
+        component: () => import('pages/dashboard/ModuleDetails.vue'),
       },
     ],
   },

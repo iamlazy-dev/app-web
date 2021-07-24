@@ -3,8 +3,8 @@
     padding
     class="flex flex-col items-stretch"
   >
-    <section class="flex flex-col mx-auto max-w-screen-lg w-full min-h-[80vh] gap-y-8 justify-center">
-      <h5 class="font-medium text-xl ml-4 text-gray-500">
+    <section class="page-section justify-center">
+      <h5 class="my-2 text-xl page-section__title">
         {{ $t('dashboard.recentProjects') }}
       </h5>
 

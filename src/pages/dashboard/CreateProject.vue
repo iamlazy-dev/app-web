@@ -14,11 +14,11 @@
       />
     </section>
 
-    <section class="flex flex-col mx-auto max-w-screen-lg w-full min-h-[80vh] gap-y-8 justify-center">
+    <section class="page-section justify-center">
       <q-form>
         <q-card class="rounded-xl mx-auto max-w-prose w-full q-card">
           <q-card-section>
-            <h6 class="font-medium text-lg text-gray-500">
+            <h6 class="ml-0 page-section__title">
               {{ $t('dashboard.createProject') }}
             </h6>
           </q-card-section>

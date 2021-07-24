@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh lpR lfr">
+  <q-layout view="lHh LpR lfr">
     <q-header elevated>
       <q-toolbar class="bg-cool-gray-600 p-2.5 gap-x-4">
         <q-btn
@@ -149,7 +149,7 @@
         <q-separator class="bg-gray-200 mt-2 mb-4" />
 
         <q-item
-          to="/dashboard"
+          :to="{name: 'DashboardOverview'}"
           exact
           class="rounded-2xl text-gray-600"
           active-class="bg-gray-200"
@@ -192,7 +192,7 @@
         </q-item>
 
         <q-item
-          to="/dashboard/module"
+          :to="{name: 'DashboardModuleExplorer'}"
           exact
           dense
           class="border-dashed border-2 border-gray-200 rounded-2xl text-gray-500"

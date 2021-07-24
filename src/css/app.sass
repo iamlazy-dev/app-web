@@ -2,3 +2,16 @@
   .brand
     font-family: Arial, Helvetica, sans-serif !important
     @apply font-black text-gray-900 leading-tight tracking-tight antialiased
+
+
+  .page-section
+    @apply flex flex-col mx-auto max-w-screen-lg w-full min-h-[80vh] gap-y-4 justify-start
+    &--no-min-h
+      @extend .page-section
+      @apply min-h-0
+    &--no-max-w
+      @extend .page-section
+      @apply max-w-none
+
+    &__title
+      @apply font-medium text-xl ml-4 my-2 text-gray-500

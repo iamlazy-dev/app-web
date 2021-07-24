@@ -6,4 +6,11 @@ export default {
       name: 'Nama projek',
     },
   },
+  module: {
+    official: 'Official',
+    community: 'Komunitas',
+    installed: 'Terpasang',
+    install: 'Tambahkan',
+    installToProject: 'Tambahkan ke projek',
+  },
 };

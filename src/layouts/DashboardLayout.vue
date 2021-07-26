@@ -80,52 +80,7 @@
             D
           </q-avatar>
 
-          <q-menu
-            anchor="bottom right"
-            self="top right"
-            transition-show="jump-down"
-            transition-hide="jump-up"
-            transition-duration="200"
-            class="border-t rounded-lg border-gray-200/60 shadow-lg min-w-52 uppercase"
-          >
-            <q-list>
-              <q-item
-                v-ripple
-                clickable
-                class="bg-bg-light-100"
-              >
-                <q-item-section avatar>
-                  <q-avatar
-                    icon="r_help"
-                    rounded
-                    class="h-8 text-gray-400 w-8"
-                  />
-                </q-item-section>
-                <q-item-section class="font-medium text-gray-700">
-                  {{ $t('layouts.main.navItem.help') }}
-                </q-item-section>
-              </q-item>
-
-              <q-separator />
-
-              <q-item
-                v-ripple
-                clickable
-                class="bg-bg-light-100"
-              >
-                <q-item-section avatar>
-                  <q-avatar
-                    icon="r_logout"
-                    rounded
-                    class="h-8 text-gray-400 w-8"
-                  />
-                </q-item-section>
-                <q-item-section class="font-medium text-gray-700">
-                  {{ $t('btn.logout') }}
-                </q-item-section>
-              </q-item>
-            </q-list>
-          </q-menu>
+          <layout-menu />
         </q-btn>
       </q-toolbar>
     </q-header>
@@ -283,8 +238,9 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue';
 import { uid } from 'quasar';
-import { useI18n } from 'vue-i18n';
+import i18n from 'src/i18n';
 import type { RouteLocationRaw } from 'vue-router';
+import LayoutMenu from 'components/LayoutMenu.vue';
 
 interface UserProject {
   id: string;
@@ -306,6 +262,12 @@ interface NotificationItem {
   action: RouteLocationRaw;
 }
 
+const projects: UserProject[] = [
+  { id: uid(), name: 'Toko Elektronik Sugih Waras' },
+  { id: uid(), name: 'TBK. Mesra' },
+  { id: uid(), name: 'PT. Mencari Cinta Sejati' },
+];
+
 const installedModules: SideNavItem[] = [
   {
     label: 'Product Database',
@@ -319,33 +281,27 @@ const installedModules: SideNavItem[] = [
   },
 ];
 
-const projects: UserProject[] = [
-  { id: uid(), name: 'Toko Elektronik Sugih Waras' },
-  { id: uid(), name: 'TBK. Mesra' },
-  { id: uid(), name: 'PT. Mencari Cinta Sejati' },
+const sideNavSettingItems: SideNavItem[] = [
+  { label: i18n.global.t('layouts.dashboard.sideNav.team'), icon: 'r_group', to: '/dashboard/teams' },
+  { label: i18n.global.t('layouts.dashboard.sideNav.general'), icon: 'r_settings', to: '/dashboard/settings' },
+  { label: i18n.global.t('layouts.dashboard.sideNav.usage'), icon: 'r_data_usage', to: '/dashboard/usage' },
 ];
 
 export default defineComponent({
   name: 'DashboardLayout',
+  components: { LayoutMenu },
   setup() {
     const state = reactive({
       isLeftDrawerOpen: false,
       isRightDrawerOpen: false,
     });
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    const { t } = useI18n();
-    const sideNavSettingItems: SideNavItem[] = [
-      { label: t('layouts.dashboard.sideNav.team'), icon: 'r_group', to: '/dashboard/teams' },
-      { label: t('layouts.dashboard.sideNav.general'), icon: 'r_settings', to: '/dashboard/settings' },
-      { label: t('layouts.dashboard.sideNav.usage'), icon: 'r_data_usage', to: '/dashboard/usage' },
-    ];
     const notificationItems: NotificationItem[] = [
-      // {
-      //   message: 'Anda didenda sebanyak 50M!',
-      //   type: 'need action',
-      //   timestamp: new Date(),
-      //   action: '/dashboard',
-      // },
+      {
+        message: 'Anda didenda sebanyak 50M!',
+        type: 'need action',
+        timestamp: new Date(),
+        action: '/dashboard',
+      },
     ];
 
     return {

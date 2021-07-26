@@ -21,95 +21,23 @@
             round
             class="bg-gray-200 py-2 text-gray-700 sm:hidden"
           >
-            <q-menu class="min-w-[50vw] uppercase">
-              <q-list>
-                <q-item
-                  v-ripple
-                  clickable
-                >
-                  <q-item-section avatar>
-                    <q-avatar
-                      icon="r_category"
-                      rounded
-                      class="h-8 text-gray-400 w-8"
-                    />
-                  </q-item-section>
-                  <q-item-section class="font-medium text-gray-700">
-                    {{ $t('layouts.main.navItem.products') }}
-                  </q-item-section>
-                </q-item>
-
-                <q-item
-                  v-ripple
-                  clickable
-                >
-                  <q-item-section avatar>
-                    <q-avatar
-                      icon="r_article"
-                      rounded
-                      class="h-8 text-gray-400 w-8"
-                    />
-                  </q-item-section>
-                  <q-item-section class="font-medium text-gray-700">
-                    {{ $t('layouts.main.navItem.guides') }}
-                  </q-item-section>
-                </q-item>
-
-                <q-item
-                  v-ripple
-                  clickable
-                >
-                  <q-item-section avatar>
-                    <q-avatar
-                      icon="r_price_check"
-                      rounded
-                      class="h-8 text-gray-400 w-8"
-                    />
-                  </q-item-section>
-                  <q-item-section class="font-medium text-gray-700">
-                    {{ $t('layouts.main.navItem.pricing') }}
-                  </q-item-section>
-                </q-item>
-
-                <q-item
-                  v-ripple
-                  :to="{name: 'DashboardIndex'}"
-                  class="bg-bg-light-100"
-                >
-                  <q-item-section avatar>
-                    <q-avatar
-                      icon="r_dashboard"
-                      rounded
-                      class="h-8 text-gray-400 w-8"
-                    />
-                  </q-item-section>
-                  <q-item-section class="font-medium text-gray-700">
-                    {{ $t('layouts.main.navItem.dashboard') }}
-                  </q-item-section>
-                </q-item>
-              </q-list>
-            </q-menu>
+            <layout-menu
+              :unshift-items="mobileAdditionalMenu"
+              class="min-w-[50vw]"
+            />
           </q-btn>
 
           <div class="gap-x-8 hidden items-center !sm:flex">
             <q-btn
-              :label="$t('layouts.main.navItem.products')"
+              v-for="el, i in navItems"
+              :key="i"
+              :label="el.label"
               flat
               rounded
               class="text-gray-600"
+              v-bind="el"
             />
-            <q-btn
-              :label="$t('layouts.main.navItem.guides')"
-              flat
-              rounded
-              class="text-gray-600"
-            />
-            <q-btn
-              :label="$t('layouts.main.navItem.pricing')"
-              flat
-              rounded
-              class="text-gray-600"
-            />
+
             <q-btn
               rounded
               :class="`text-gray-700 ${isScrolled ? 'before:(border shadow-none)' : 'before:(border-t border-gray-200/90 shadow-md)'}`"
@@ -123,88 +51,7 @@
                 />
               </div>
 
-              <q-menu
-                anchor="bottom right"
-                self="top right"
-                transition-show="jump-down"
-                transition-hide="jump-up"
-                transition-duration="200"
-                class="border-t rounded-lg border-gray-200/60 shadow-lg min-w-52 uppercase"
-              >
-                <q-list>
-                  <q-item
-                    v-ripple
-                    clickable
-                    class="bg-bg-light-100"
-                  >
-                    <q-item-section avatar>
-                      <q-avatar
-                        icon="r_person"
-                        rounded
-                        class="h-8 text-gray-400 w-8"
-                      />
-                    </q-item-section>
-                    <q-item-section class="font-medium text-gray-700">
-                      {{ $t('layouts.main.navItem.myAccount') }}
-                    </q-item-section>
-                  </q-item>
-
-                  <q-separator />
-
-                  <q-item
-                    v-ripple
-                    :to="{name: 'DashboardIndex'}"
-                    class="bg-bg-light-100"
-                  >
-                    <q-item-section avatar>
-                      <q-avatar
-                        icon="r_dashboard"
-                        rounded
-                        class="h-8 text-gray-400 w-8"
-                      />
-                    </q-item-section>
-                    <q-item-section class="font-medium text-gray-700">
-                      {{ $t('layouts.main.navItem.dashboard') }}
-                    </q-item-section>
-                  </q-item>
-
-                  <q-item
-                    v-ripple
-                    clickable
-                    class="bg-bg-light-100"
-                  >
-                    <q-item-section avatar>
-                      <q-avatar
-                        icon="r_help"
-                        rounded
-                        class="h-8 text-gray-400 w-8"
-                      />
-                    </q-item-section>
-                    <q-item-section class="font-medium text-gray-700">
-                      {{ $t('layouts.main.navItem.help') }}
-                    </q-item-section>
-                  </q-item>
-
-                  <q-separator />
-
-                  <q-item
-                    v-ripple
-                    clickable
-                    class="bg-bg-light-100"
-                  >
-                    <q-item-section avatar>
-                      <q-avatar
-                        icon="r_logout"
-                        rounded
-                        class="h-8 text-gray-400 w-8"
-                      />
-                    </q-item-section>
-                    <q-item-section class="font-medium text-gray-700">
-                      {{ $t('btn.logout') }}
-                    </q-item-section>
-                  </q-item>
-                </q-list>
-              </q-menu>
+              <layout-menu />
             </q-btn>
           </div>
         </div>
@@ -220,10 +67,38 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import type { Q } from 'src/types';
+import type { LayoutMenu as ILayoutMenu, Q } from 'src/types';
+import LayoutMenu from 'components/LayoutMenu.vue';
+import i18n from 'src/i18n';
+
+interface NavItem {
+  label: string;
+  [k: string]: unknown;
+}
+
+const { global: { t } } = i18n;
+
+const navItems: NavItem[] = [
+  { label: t('layouts.main.navItem.products') },
+  { label: t('layouts.main.navItem.guides') },
+  { label: t('layouts.main.navItem.pricing') },
+];
+
+const mobileAdditionalMenu: ILayoutMenu.Item[][] = [[
+  { label: t('layouts.main.navItem.products'), icon: 'r_category' },
+  { label: t('layouts.main.navItem.guides'), icon: 'r_article' },
+  { label: t('layouts.main.navItem.pricing'), icon: 'r_price_check' },
+]];
 
 export default defineComponent({
   name: 'MainLayout',
+  components: { LayoutMenu },
+  setup() {
+    return {
+      navItems,
+      mobileAdditionalMenu,
+    };
+  },
   data() {
     return {
       isScrolled: false,

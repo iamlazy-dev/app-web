@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-namespace */
+import type { RouteLocationRaw } from 'vue-router';
 
 export namespace Q {
   export namespace Layout {
@@ -9,5 +10,15 @@ export namespace Q {
       delta: number;
       inflectionPoint: number;
     }
+  }
+}
+
+export namespace LayoutMenu {
+  export interface Item {
+    label: string;
+    icon: string;
+    guard?: 'auth' | 'no-auth';
+    to?: RouteLocationRaw;
+    [k: string]: unknown;
   }
 }

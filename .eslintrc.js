@@ -101,6 +101,7 @@ module.exports = {
       code: 150,
       // will ignore everything inside html attrs
       ignorePattern: '[\\w-]+="([^"]*)"',
+      ignoreStrings: true
     }],
   }
 }

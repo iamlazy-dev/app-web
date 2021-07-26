@@ -11,7 +11,6 @@
 /* eslint func-names: 0 */
 /* eslint global-require: 0 */
 const { configure } = require('quasar/wrappers');
-const WindiCSS = require('windicss-webpack-plugin').default;
 
 module.exports = configure((ctx) => ({
   // https://v2.quasar.dev/quasar-cli/supporting-ts
@@ -36,7 +35,7 @@ module.exports = configure((ctx) => ({
 
   // https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
   css: [
-    '~windi.css',
+    'app.sass',
   ],
 
   // https://github.com/quasarframework/quasar/tree/dev/extras
@@ -77,12 +76,6 @@ module.exports = configure((ctx) => ({
     // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
     chainWebpack(/* chain */) {
       //
-    },
-    extendWebpack(cfg) {
-      cfg.plugins = [
-        ...cfg.plugins,
-        new WindiCSS(),
-      ];
     },
   },
 

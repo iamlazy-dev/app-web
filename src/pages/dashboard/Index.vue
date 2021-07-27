@@ -8,11 +8,11 @@
         {{ $t('dashboard.recentProjects') }}
       </h5>
 
-      <ul class="auto-rows-fr grid gap-6 grid-cols-3">
+      <ul class="auto-rows-fr grid gap-6 grid-cols-1 sm:grid-cols-3">
         <q-card
           flat
           bordered
-          class="bg-white rounded-lg h-48 transition-colors justify-between !hover:bg-gray-100"
+          class="bg-white rounded-lg h-48 w-full transition-colors justify-between !hover:bg-gray-100"
         >
           <q-card-section class="flex h-full text-gray-500 gap-x-2 justify-center items-center">
             <q-icon name="r_add" />
@@ -33,7 +33,7 @@
           tag="li"
           flat
           bordered
-          class="bg-white rounded-lg h-48 transition-colors justify-between !hover:bg-gray-100"
+          class="bg-white rounded-lg h-48 w-full transition-colors justify-between !hover:bg-gray-100"
         >
           <q-card-section>
             <h6 class="font-medium text-lg">

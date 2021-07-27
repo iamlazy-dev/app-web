@@ -46,8 +46,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import type { Q } from 'src/types';
 import LayoutMenu from 'components/LayoutMenu.vue';
+import type { Q } from 'src/types';
 
 export default defineComponent({
   name: 'SimpleLayout',

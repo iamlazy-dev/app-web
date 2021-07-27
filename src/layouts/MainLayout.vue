@@ -67,9 +67,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import type { LayoutMenu as ILayoutMenu, Q } from 'src/types';
-import LayoutMenu from 'components/LayoutMenu.vue';
 import i18n from 'src/i18n';
+import LayoutMenu from 'components/LayoutMenu.vue';
+import type { LayoutMenu as ILayoutMenu, Q } from 'src/types';
 
 interface NavItem {
   label: string;

@@ -13,11 +13,13 @@ export namespace Q {
   }
 }
 
+export type GuardType = 'auth' | 'no-auth';
+
 export namespace LayoutMenu {
   export interface Item {
     label: string;
     icon: string;
-    guard?: 'auth' | 'no-auth';
+    guard?: GuardType;
     to?: RouteLocationRaw;
     [k: string]: unknown;
   }

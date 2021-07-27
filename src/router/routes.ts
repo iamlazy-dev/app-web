@@ -42,9 +42,14 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/dashboard/ModuleExplorer.vue'),
       },
       {
-        path: 'module/:moduleId',
+        path: 'module/details/:moduleId',
         name: 'DashboardModuleDetails',
         component: () => import('pages/dashboard/ModuleDetails.vue'),
+      },
+      {
+        path: 'module',
+        name: 'DashboardAppModule',
+        component: () => import('layouts/AppModuleLayout.vue'),
       },
     ],
   },

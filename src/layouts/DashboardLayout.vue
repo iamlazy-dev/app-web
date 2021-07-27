@@ -239,8 +239,9 @@
 import { defineComponent, reactive, toRefs } from 'vue';
 import { uid } from 'quasar';
 import i18n from 'src/i18n';
-import type { RouteLocationRaw } from 'vue-router';
 import LayoutMenu from 'components/LayoutMenu.vue';
+import { registeredAppModules } from 'src/appModule/defineAppModule';
+import type { RouteLocationRaw } from 'vue-router';
 
 interface UserProject {
   id: string;
@@ -268,18 +269,16 @@ const projects: UserProject[] = [
   { id: uid(), name: 'PT. Mencari Cinta Sejati' },
 ];
 
-const installedModules: SideNavItem[] = [
-  {
-    label: 'Product Database',
-    icon: 'img:https://www.gstatic.com/devrel-devsite/prod/v6276805c2ff8bacc915973efaa269b575b44ae3dde218d0ec8425b822ec321de/firebase/images/favicon.png',
-    to: `/dashboard/module/${uid()}`,
-  },
-  {
-    label: 'Payments',
-    icon: 'r_payments',
-    to: `/dashboard/module/${uid()}`,
-  },
-];
+const installedModules: SideNavItem[] = registeredAppModules.map((el) => {
+  const { id, name } = el.getInfo();
+  const { iconOnNav } = el.getUIInfo();
+
+  return {
+    label: name,
+    icon: iconOnNav,
+    to: { name: `DashboardAppModule[${id}]` },
+  };
+});
 
 const sideNavSettingItems: SideNavItem[] = [
   { label: i18n.global.t('layouts.dashboard.sideNav.team'), icon: 'r_group', to: '/dashboard/teams' },

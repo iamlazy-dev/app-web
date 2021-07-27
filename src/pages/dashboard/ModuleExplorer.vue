@@ -48,9 +48,9 @@
 import { defineComponent } from 'vue';
 import { uid } from 'quasar';
 import CardModule from 'components/Dashboard/CardModule.vue';
-import type { AppModule } from 'src/models';
+import type { UserAppModule } from 'src/models';
 
-const modules: AppModule[] = [
+const modules: UserAppModule[] = [
   {
     id: uid(),
     name: 'Toko Elektronik Sugih Waras',

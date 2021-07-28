@@ -10,6 +10,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint func-names: 0 */
 /* eslint global-require: 0 */
+const { resolve } = require('path');
 const { configure } = require('quasar/wrappers');
 
 module.exports = configure((ctx) => ({
@@ -49,6 +50,7 @@ module.exports = configure((ctx) => ({
     // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
 
     'roboto-font', // optional, you are not bound to it
+    'material-icons', // optional, you are not bound to it
     'material-icons-round', // optional, you are not bound to it
   ],
 
@@ -74,8 +76,10 @@ module.exports = configure((ctx) => ({
 
     // https://v2.quasar.dev/quasar-cli/handling-webpack
     // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
-    chainWebpack(/* chain */) {
-      //
+    chainWebpack(chain) {
+      chain.resolve.alias.merge({
+        appModules: resolve(__dirname, './src/appModules'),
+      });
     },
   },
 

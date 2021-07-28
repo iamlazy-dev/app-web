@@ -1,11 +1,11 @@
 <template>
   <q-page
-    padding
-    class="flex flex-col app-module items-stretch"
+    :style-fn="getPageStyle"
+    class="flex flex-col py-4 app-module items-stretch sm:p-4"
   >
     <q-card
       tag="section"
-      class="rounded-lg min-h-[80vh]"
+      class="rounded-lg h-full max-h-full w-full overflow-hidden"
     >
       <q-tabs
         v-model="tab"
@@ -28,8 +28,15 @@
 
       <q-separator />
 
-      <q-tab-panels v-model="tab">
-        <q-tab-panel name="develop">
+      <q-tab-panels
+        v-model="tab"
+        keep-alive
+        class="h-full max-h-full pb-9"
+      >
+        <q-tab-panel
+          name="develop"
+          class="p-0"
+        >
           <slot>
             <router-view />
           </slot>
@@ -64,6 +71,11 @@ export default defineComponent({
     });
 
     return { ...toRefs(state) };
+  },
+  methods: {
+    getPageStyle(offset: number): Partial<CSSStyleDeclaration> {
+      return { height: `calc(100vh - ${offset}px)` };
+    },
   },
 });
 </script>

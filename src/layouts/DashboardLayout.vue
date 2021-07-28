@@ -240,7 +240,7 @@ import { defineComponent, reactive, toRefs } from 'vue';
 import { uid } from 'quasar';
 import i18n from 'src/i18n';
 import LayoutMenu from 'components/LayoutMenu.vue';
-import { registeredAppModules } from 'src/appModule/defineAppModule';
+import { registeredAppModules } from 'appModules/defineAppModule';
 import type { RouteLocationRaw } from 'vue-router';
 
 interface UserProject {

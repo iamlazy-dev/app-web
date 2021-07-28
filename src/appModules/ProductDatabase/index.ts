@@ -1,4 +1,4 @@
-import defineAppModule from 'src/appModule/defineAppModule';
+import defineAppModule from 'appModules/defineAppModule';
 
 export default defineAppModule({
   id: 'product-database',

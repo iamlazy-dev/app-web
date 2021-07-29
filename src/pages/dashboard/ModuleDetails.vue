@@ -44,7 +44,7 @@
       </div>
     </q-scroll-area>
 
-    <section class="flex-row px-8 page-section">
+    <section class="px-8 page-section !flex-row">
       <article class="min-w-prose prose">
         <h2>Overview</h2>
         <!-- injected user content will be start here -->

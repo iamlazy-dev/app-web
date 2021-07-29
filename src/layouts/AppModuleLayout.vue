@@ -33,19 +33,18 @@
         keep-alive
         class="h-full max-h-full pb-9"
       >
-        <q-tab-panel
-          name="develop"
-          class="p-0"
-        >
+        <q-tab-panel name="develop">
           <slot>
             <router-view />
           </slot>
         </q-tab-panel>
 
         <q-tab-panel name="settings">
-          <slot name="settings">
-            <router-view name="settings" />
-          </slot>
+          <module-settings>
+            <slot name="settings">
+              <router-view name="settings" />
+            </slot>
+          </module-settings>
         </q-tab-panel>
 
         <q-tab-panel name="usage">
@@ -59,12 +58,12 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent, reactive, toRefs,
-} from 'vue';
+import { defineComponent, reactive, toRefs } from 'vue';
+import ModuleSettings from 'components/ModuleSettings.vue';
 
 export default defineComponent({
   name: 'AppModuleLayout',
+  components: { ModuleSettings },
   setup() {
     const state = reactive({
       tab: 'develop',
@@ -85,4 +84,7 @@ export default defineComponent({
   .q-tab
     &__content
       @apply px-4
+
+  .q-tab-panel
+    @apply p-0
 </style>

@@ -53,21 +53,21 @@ import type { UserAppModule } from 'src/models';
 const modules: UserAppModule[] = [
   {
     id: uid(),
-    name: 'Toko Elektronik Sugih Waras',
+    name: 'Product Database',
     devName: 'iamlazy.dev',
     desc: 'lorem ipsum dolor sit ametlorem ipsum dolor sit ametlorem ipsum dolor sit ametlorem ipsum dolor sit ametlorem ipsum dolor sit ametlorem ipsum dolor sit amet',
     installed: Math.random() > 0.3,
   },
   {
     id: uid(),
-    name: 'TBK. Mesra',
+    name: 'Simple Payment',
     devName: 'iamlazy.dev',
     desc: 'lorem ipsum dolor sit ametlorem ipsum dolor sit ametlorem ipsum dolor sit amet',
     installed: Math.random() > 0.3,
   },
   {
     id: uid(),
-    name: 'PT. Mencari Cinta Sejati',
+    name: 'Authentication',
     devName: 'iamlazy.dev',
     desc: 'lorem ipsum dolor sit amet',
     installed: Math.random() > 0.3,

@@ -9,7 +9,7 @@
   >
     <q-list>
       <template
-        v-for="els, i in mergedItems"
+        v-for="els, i in items"
         :key="i"
       >
         <q-item
@@ -31,7 +31,7 @@
           </q-item-section>
         </q-item>
 
-        <q-separator v-if="els.length && (i <= mergedItems.length)" />
+        <q-separator v-if="els.length && (i <= items.length)" />
       </template>
     </q-list>
   </q-menu>
@@ -39,7 +39,10 @@
 
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
+import { Loading } from 'quasar';
 import i18n from 'src/i18n';
+import { auth } from 'boot/auth';
+import usePlocState from 'src/use/plocState';
 import type { PropType } from 'vue';
 import type { LayoutMenu } from 'src/types';
 
@@ -51,6 +54,11 @@ const items: LayoutMenu.Item[][] = [
       label: t('btn.login'),
       icon: 'r_login',
       guard: 'no-auth',
+      onClick: () => {
+        Loading.show();
+        auth.login('test@iamlazy.dev', 'pass123')
+          .finally(() => Loading.hide());
+      },
     },
     {
       label: t('btn.register'),
@@ -74,6 +82,11 @@ const items: LayoutMenu.Item[][] = [
       label: t('btn.logout'),
       icon: 'r_logout',
       guard: 'auth',
+      onClick: () => {
+        Loading.show();
+        auth.logout()
+          .finally(() => Loading.hide());
+      },
     },
   ],
   [{
@@ -95,12 +108,26 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const authState = usePlocState(auth);
+    const mergedItems = computed(() => [...props.unshiftItems, ...items, ...props.pushItems]
+      .map((els) => els
+        .map((el) => (el.to
+          ? el
+          : { ...el, clickable: true }))));
+    const filteredItems = computed(() => mergedItems.value
+      .map((els) => els
+        .filter(({ guard }) => {
+          if (guard === undefined) {
+            return true;
+          }
+
+          return ((authState.value.kind === 'Authenticated')
+            ? guard === 'auth'
+            : guard === 'no-auth');
+        })));
+
     return {
-      mergedItems: computed(() => [...props.unshiftItems, ...items, ...props.pushItems]
-        .map((els) => els
-          .map((el) => (el.to
-            ? el
-            : { ...el, clickable: true })))),
+      items: filteredItems,
     };
   },
 });

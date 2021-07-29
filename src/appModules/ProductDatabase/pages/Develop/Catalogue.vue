@@ -29,7 +29,10 @@
 
     <template #item="props">
       <div class="h-auto w-full p-1.5 sm:w-1/2 md:w-1/4">
-        <q-card class="flex flex-col h-full">
+        <q-card
+          class="bg-white cursor-pointer flex flex-col h-full !hover:bg-gray-50"
+          @click="$emit('productClick', props.row)"
+        >
           <q-img
             :src="props.row.img[0]"
             class="flex-grow bg-gray-100 h-40"
@@ -49,7 +52,7 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue';
 import type { PropType } from 'vue';
-import type { Product } from '@iamlazy.dev/core';
+import type { Product } from '@iamlazy.dev/core/product-database';
 import type { Q } from 'src/types';
 
 const columnDefinitions = [
@@ -90,7 +93,7 @@ export default defineComponent({
       default: '',
     },
   },
-  emits: ['update:filter'],
+  emits: ['update:filter', 'productClick'],
   setup() {
     const state = reactive({
       //

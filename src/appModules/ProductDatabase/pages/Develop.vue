@@ -4,6 +4,9 @@
       v-model="tab"
       vertical
       keep-alive
+      animated
+      transition-prev="slide-right"
+      transition-next="slide-left"
       class="flex-grow"
     >
       <q-tab-panel name="read">
@@ -12,13 +15,45 @@
             v-model:filter="filter"
             :data="productsState.products"
             :loading="productsState.kind === 'Loading'"
+            @productClick="onProductClick"
           />
         </q-scroll-area>
       </q-tab-panel>
 
       <q-tab-panel name="create">
         <div class="flex flex-col w-full p-4 items-center">
-          <product-form class="max-w-prose w-full" />
+          <q-btn
+            icon="r_arrow_back"
+            round
+            flat
+            class="ml-4 text-gray-700 self-start"
+            @click="tab = 'read'"
+          />
+
+          <product-form
+            class="max-w-prose w-full"
+            @save="onProductCreate"
+          />
+        </div>
+      </q-tab-panel>
+
+      <q-tab-panel name="update">
+        <div class="flex flex-col w-full p-4 items-center">
+          <q-btn
+            icon="r_arrow_back"
+            round
+            flat
+            class="ml-4 text-gray-700 self-start"
+            @click="tab = 'read'"
+          />
+
+          <product-form
+            v-model:data="productData"
+            :title="`Edit: ${productData.name}`"
+            class="max-w-prose w-full"
+            @save="onProductUpdate"
+            @discard="onDiscardProductUpdate"
+          />
         </div>
       </q-tab-panel>
     </q-tab-panels>
@@ -61,21 +96,23 @@
 import {
   defineComponent, reactive, toRefs, onMounted,
 } from 'vue';
+import { Product, ProductsPlocFakerProvider } from '@iamlazy.dev/core/product-database';
+// import { DataType } from '@iamlazy.dev/core';
 import Catalogue from 'appModules/ProductDatabase/pages/Develop/Catalogue.vue';
 import ProductForm from 'appModules/ProductDatabase/components/ProductForm.vue';
-import { ProductDatabase } from '@iamlazy.dev/core';
 import usePlocState from 'src/use/plocState';
 
 export default defineComponent({
   name: 'ProductDatabaseDevelop',
   components: { Catalogue, ProductForm },
   setup() {
-    const ploc = ProductDatabase.ProductPlocFakerProvider();
+    const ploc = ProductsPlocFakerProvider();
     const productsState = usePlocState(ploc);
     const state = reactive({
       tab: 'read',
       filter: '',
       isTabsReveal: true,
+      productData: Product.create(),
     });
 
     onMounted(() => ploc.find('name', ''));
@@ -84,6 +121,23 @@ export default defineComponent({
       ...toRefs(state),
       productsState,
     };
+  },
+  methods: {
+    onProductClick(item: Product) {
+      this.tab = 'update';
+      this.productData = item;
+    },
+    onProductCreate(/* ...args: any[] */) {
+      debugger;
+    },
+    onProductUpdate(product: Product/* , uploadedImg: DataType.List<DataType.File> */) {
+      debugger;
+      this.$q.notify({ type: 'positive', message: `Successfully update ${product.name}` });
+      this.tab = 'read';
+    },
+    onDiscardProductUpdate() {
+      this.tab = 'read';
+    },
   },
 });
 </script>

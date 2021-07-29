@@ -1,5 +1,5 @@
 <template>
-  <q-form>
+  <q-form @submit.prevent="onSubmit">
     <q-card>
       <q-card-section>
         <h6 class="text-h6">
@@ -13,7 +13,7 @@
           :key="el"
           :src="el"
           :ratio="4/3"
-          class="flex-grow bg-gray-100 flex-shrink-0 w-56"
+          class="flex-grow bg-gray-100 flex-shrink-0 w-60"
         >
           <div class="bg-transparent top-0 right-0 absolute !p-2">
             <q-btn
@@ -28,7 +28,7 @@
 
         <q-img
           :ratio="4/3"
-          class="border flex-grow bg-gray-50 flex-shrink-0 w-56"
+          class="border flex-grow bg-gray-50 flex-shrink-0 w-60"
         >
           <div class="bg-transparent flex flex-col h-full w-full text-gray-700 justify-center items-center">
             <q-btn
@@ -37,7 +37,16 @@
               rounded
               flat
               class="bg-gray-700/70 shadow-lg text-white"
-            />
+            >
+              <input
+                ref="imgUploader"
+                type="file"
+                multiple
+                accept=".jpg,.jpeg,.png"
+                class="h-full w-full opacity-0 z-1 absolute !cursor-pointer"
+                @change="onImgUploaderChange"
+              >
+            </q-btn>
           </div>
         </q-img>
       </div>
@@ -117,6 +126,12 @@
 
       <q-card-actions align="right">
         <q-btn
+          label="Discard"
+          flat
+          class="bg-white text-gray-700"
+          @click="onDiscard"
+        />
+        <q-btn
           label="Save"
           type="submit"
           class="bg-gray-700 text-white"
@@ -130,7 +145,7 @@
 import {
   defineComponent, reactive, toRefs, watch,
 } from 'vue';
-import { Product } from '@iamlazy.dev/core';
+import { Product } from '@iamlazy.dev/core/product-database';
 import type { PropType } from 'vue';
 import type { Q } from 'src/types';
 
@@ -184,9 +199,12 @@ export default defineComponent({
       default: 'Add new product',
     },
   },
+  emits: ['save', 'discard'],
   setup(props) {
     const state = reactive({
       editableData: props.data,
+      uploadedImg: [] as File[],
+      imgUploader: null as (HTMLInputElement | null),
     });
 
     watch(() => props.data, () => {
@@ -209,6 +227,23 @@ export default defineComponent({
       /* TODO: editableSpecs */
       // formattedSpecs,
     };
+  },
+  methods: {
+    onImgUploaderChange() {
+      this.uploadedImg = Array.from(this.imgUploader?.files ?? []);
+    },
+    onSubmit() {
+      this.$emit('save', this.editableData, this.uploadedImg);
+    },
+    onDiscard() {
+      this.$q.dialog({
+        title: 'Confirm',
+        message: 'Are you sure to discard this changes?',
+        cancel: true,
+        persistent: true,
+      })
+        .onOk(() => this.$emit('discard'));
+    },
   },
 });
 </script>

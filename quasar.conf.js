@@ -18,7 +18,7 @@ module.exports = configure((ctx) => ({
   supportTS: {
     tsCheckerConfig: {
       eslint: {
-        enabled: true,
+        enabled: !ctx.prod,
         files: './src/**/*.{ts,tsx,js,jsx,vue}',
       },
     },
